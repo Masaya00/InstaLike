@@ -15,4 +15,4 @@ Nextjs Django それぞれ別でプロジェクトを立ち上げる必要があ
 - djangorestframework==3.14.0
 - Python 3.11.3
 - node v19.9.0
-- next: "13.3.0",
+- next 13.3.0
