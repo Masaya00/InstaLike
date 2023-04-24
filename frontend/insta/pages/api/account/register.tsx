@@ -10,6 +10,8 @@ const register_api = async(req: any, res: any) => {
     })
 
     // 新規ユーザー登録のためにapiをpostで叩いている
+    // NEXT_PUBLIC_API_URLは http://127.0.0.1:8000 を定義
+    // console.log(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register/`) => http://127.0.0.1:8000/api/auth/register/ が出力されることを確認
     try {
       const apiRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register/`, {
         method: 'POST',
@@ -33,6 +35,7 @@ const register_api = async(req: any, res: any) => {
       }
 
     } catch (err) {
+      // 以下console.log(err)で対象のエラーが発生
       console.log(err)
       return res.status(500).json({
         error: 'アカウント登録に失敗しました',
