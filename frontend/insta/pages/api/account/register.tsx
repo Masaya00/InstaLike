@@ -1,4 +1,5 @@
-const register = async(req: any, res: any) => {
+const register_api = async(req: any, res: any) => {
+  console.log('呼び出されている？')
   if (req.method === 'POST') {
     const {name, email, password} = req.body
 
@@ -8,11 +9,13 @@ const register = async(req: any, res: any) => {
       password,
     })
 
+    // 新規ユーザー登録のためにapiをpostで叩いている
     try {
       const apiRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
         body: body
       })
@@ -30,12 +33,11 @@ const register = async(req: any, res: any) => {
       }
 
     } catch (err) {
+      console.log(err)
       return res.status(500).json({
         error: 'アカウント登録に失敗しました',
       })
     }
-
-
 
   } else {
     res.setHeader('Allow', ['POST'])
@@ -43,4 +45,4 @@ const register = async(req: any, res: any) => {
   }
 }
 
-export default register
+export default register_api

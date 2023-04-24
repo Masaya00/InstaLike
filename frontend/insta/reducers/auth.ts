@@ -1,4 +1,24 @@
-import { REGISTER_SUCCESS, REGISTER_FAIL, SET_AUTH_LOADING, REMOVE_AUTH_LOADING } from "@/actions/types";
+import {
+  // アカウント登録
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
+
+  // ログイン
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+
+  // ユーザー情報取得
+  USER_SUCCESS,
+  USER_FAIL,
+
+  // リフレッシュトークン
+  REFRESH_SUCCESS,
+  REFRESH_FAIL,
+
+  // 読み込み中
+  SET_AUTH_LOADING,
+  REMOVE_AUTH_LOADING
+} from "@/actions/types";
 
 
 const initialState = {
@@ -21,6 +41,43 @@ const authReducers = (state = initialState, action: any) => {
       return {
         ...state,
       }
+
+    // ログイン
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        isAuthenticated: true,
+      }
+    case LOGIN_FAIL:
+      return {
+        ...state,
+        isAuthenticated: false,
+      }
+
+    // ユーザー情報取得
+    case USER_SUCCESS:
+      return {
+        ...state,
+        user: payload.user,
+      }
+    case USER_FAIL:
+      return {
+        ...state,
+        user: null,
+      }
+
+    // リフレッシュトークン
+    case REFRESH_SUCCESS:
+      return {
+        ...state,
+      }
+    case REFRESH_FAIL:
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: null,
+      }
+
     // 読み込み中
     case SET_AUTH_LOADING:
       return {

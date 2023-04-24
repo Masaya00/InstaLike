@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-import register from '@/actions/auth'
+import { register } from '../actions/auth'
 import Loader from "react-loader-spinner";
 import Head from "next/head";
 
@@ -21,12 +21,13 @@ const Register = () => {
   const {name, email, password} = formData
 
   const onSubmit = async (e: any) => {
+    console.log(1)
     e.preventDefault()
 
+    // actions/authで定義した
     if (dispatch && dispatch !== null && dispatch !== undefined) {
-      await register(name, email, password, dispatch)
+      await dispatch(register(name, email, password))
     }
-
   }
 
   const onChange = (e: any) => {
@@ -70,7 +71,6 @@ const Register = () => {
             <button className="button-yellow" type="submit">
               送信
             </button>
-          
         </div>
       </form>
     </div>
