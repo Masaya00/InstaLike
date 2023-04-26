@@ -15,6 +15,10 @@ import {
   REFRESH_SUCCESS,
   REFRESH_FAIL,
 
+  // ログアウト
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL,
+
   // 認証チェック
   AUTHENTICATED_SUCCESS,
   AUTHENTICATED_FAIL,
@@ -43,19 +47,16 @@ export const register = (name: string, email: string, password: string) => async
       },
       body: body,
     })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error(error));
 
-    // if (res.status === 200) {
-    //   dispatch({
-    //     type: REGISTER_SUCCESS,
-    //   })
-    // } else {
-    //   dispatch({
-    //     type: REGISTER_FAIL,
-    //   })
-    // }
+    if (res.status === 200) {
+      dispatch({
+        type: REGISTER_SUCCESS,
+      })
+    } else {
+      dispatch({
+        type: REGISTER_FAIL,
+      })
+    }
   } catch (err) {
     dispatch({
       type: REGISTER_FAIL,
@@ -207,35 +208,38 @@ export const verify = () => async (dispatch: any) => {
 }
 
 // ログアウト
-// export const logout = () => async (dispatch: any) => {
-//   dispatch({
-//     type: SET_AUTH_LOADING,
-//   })
+export const logout = () => async (dispatch: any) => {
 
-//   try {
-//     const res = await fetch('/api/account/logout', {
-//       method: 'POST',
-//     })
+  console.log('ログアウトauth通過')
 
-//     if (res.status === 200) {
-//       dispatch({
-//         type: LOGOUT_SUCCESS,
-//       })
-//     } else {
-//       dispatch({
-//         type: LOGOUT_FAIL,
-//       })
-//     }
-//   } catch (err) {
-//     dispatch({
-//       type: LOGOUT_FAIL,
-//     })
-//   }
+  dispatch({
+    type: SET_AUTH_LOADING,
+  })
 
-//   dispatch({
-//     type: REMOVE_AUTH_LOADING,
-//   })
-// }
+  try {
+    const res = await fetch('/api/account/logout', {
+      method: 'POST',
+    })
+
+    if (res.status === 200) {
+      dispatch({
+        type: LOGOUT_SUCCESS,
+      })
+    } else {
+      dispatch({
+        type: LOGOUT_FAIL,
+      })
+    }
+  } catch (err) {
+    dispatch({
+      type: LOGOUT_FAIL,
+    })
+  }
+
+  dispatch({
+    type: REMOVE_AUTH_LOADING,
+  })
+}
 
 // チェックアウト
 // export const create_checkout = (email: string) => async (dispatch: any) => {

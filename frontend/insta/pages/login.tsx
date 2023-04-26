@@ -6,8 +6,9 @@ import  Loader  from "react-loader-spinner";
 import Head from "next/head";
 
 const Login = () => {
+  console.log('呼び出されている?????')
   // Reduxで使うストアオブジェクトの状態を変更するためのアクション
-  const dispatch = useDispatch;
+  const dispatch = useDispatch();
   const router = useRouter()
   // useSelectorはストア内の状態をコンポーネントから取得するために使用されるフック
   const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated)
@@ -31,7 +32,6 @@ const Login = () => {
     // デフォルトの動作をキャンセルするメソッド submitしてしまうのを防いでいる
     e.preventDefault()
     if (dispatch && dispatch !== null && dispatch !== undefined) {
-      login(email, password)
       await dispatch(login(email, password))
     }
   }
@@ -39,10 +39,6 @@ const Login = () => {
   if (typeof window !== 'undefined' && isAuthenticated) {
     router.push('/')
   }
-
-
-
-
 
   return (
     <div>
@@ -67,12 +63,12 @@ const Login = () => {
           </div>
           <input type="password" name='password' className="input-form" placeholder="半角英数８文字以上" onChange={onChange} value={password} required />
         </div>
+        <div className="flex justify-center">
+          <button className="button-yellow" type="submit">
+            送信
+          </button>
+        </div>
       </form>
-      <div className="flex justify-center">
-        <button className="button-yellow" type="submit">
-          送信
-        </button>
-      </div>
     </div>
   )
 }

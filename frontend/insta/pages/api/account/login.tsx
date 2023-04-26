@@ -42,7 +42,10 @@ const login_api = async(req: any, res: any) => {
             maxAge: 60 * 60 * 24 * 3, // 3日
           })
         ])
-        return res.status(apiRes)
+
+        return res.status(200).json({
+          success: 'ログインに成功しました',
+        })
       } else {
         return res.status(apiRes.status).json({
           error: 'ログインに失敗しました。'
