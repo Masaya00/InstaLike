@@ -31,3 +31,5 @@ const logout_api = async (req: any, res: any) => {
     })
   }
 }
+
+export default logout_api;

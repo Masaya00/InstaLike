@@ -6,7 +6,6 @@ import  Loader  from "react-loader-spinner";
 import Head from "next/head";
 
 const Login = () => {
-  console.log('呼び出されている?????')
   // Reduxで使うストアオブジェクトの状態を変更するためのアクション
   const dispatch = useDispatch();
   const router = useRouter()

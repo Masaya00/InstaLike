@@ -35,3 +35,5 @@ const verify_api = async (req: any, res: any) => {
     return res.status(405).json({error: `Method ${req.method} not allowed`})
   }
 }
+
+export default verify_api;

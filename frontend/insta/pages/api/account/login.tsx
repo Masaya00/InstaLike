@@ -2,6 +2,7 @@
 import cookie from 'cookie';
 
 const login_api = async(req: any, res: any) => {
+  console.log('ああああ')
   if (req.method === 'POST') {
     console.log(req);
     const {email, password} = req.body
