@@ -1,4 +1,4 @@
-// アカウント登録
+// ユーザー登録
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
 export const REGISTER_FAIL = 'REGISTER_FAIL'
 
@@ -14,17 +14,26 @@ export const USER_FAIL = 'USER_FAIL'
 export const REFRESH_SUCCESS = 'REFRESH_SUCCESS'
 export const REFRESH_FAIL = 'REFRESH_FAIL'
 
+// 認証チェック
+export const AUTHENTICATED_SUCCESS = 'AUTHENTICATED_SUCCESS'
+export const AUTHENTICATED_FAIL = 'AUTHENTICATED_FAIL'
+
 // ログアウト
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
 export const LOGOUT_FAIL = 'LOGOUT_FAIL'
 
-// 認証チェック用
-export const AUTHENTICATED_SUCCESS = 'AUTHENTICATED_SUCCESS'
-export const AUTHENTICATED_FAIL = 'AUTHENTICATED_FAIL'
+// プロフィール編集
+export const EDIT_PROFILE_SUCCESS = 'EDIT_PROFILE_SUCCESS'
+export const EDIT_PROFILE_FAIL = 'EDIT_PROFILE_FAIL'
 
 // 読み込み中
 export const SET_AUTH_LOADING = 'SET_AUTH_LOADING'
 export const REMOVE_AUTH_LOADING = 'REMOVE_AUTH_LOADING'
+
+// 状態解除
+export const RESET_AUTH_STATUS = 'RESET_AUTH_STATUS'
+
+// Post //
 
 // 新規投稿
 export const NEW_POST_SUCCESS = 'NEW_POST_SUCCESS'
@@ -44,4 +53,3 @@ export const REMOVE_POST_LOADING = 'REMOVE_POST_LOADING'
 
 // 状態解除
 export const RESET_POST_STATUS = 'RESET_POST_STATUS'
-

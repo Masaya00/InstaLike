@@ -15,30 +15,38 @@ import {
   REFRESH_SUCCESS,
   REFRESH_FAIL,
 
-  // ログアウト
-  LOGOUT_SUCCESS,
-  LOGOUT_FAIL,
-
   // 認証チェック
   AUTHENTICATED_SUCCESS,
   AUTHENTICATED_FAIL,
 
+  // ログアウト
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL,
+
+  // プロフィール編集
+  EDIT_PROFILE_SUCCESS,
+  EDIT_PROFILE_FAIL,
+
   // 読み込み中
   SET_AUTH_LOADING,
   REMOVE_AUTH_LOADING,
+
+  // 状態解除
+  RESET_AUTH_STATUS,
 } from './types'
 
 // ユーザー登録
-export const register = (name: string, email: string, password: string) => async (dispatch: any) => {
+export const register = (name: string, email: string, password: string) => async (dispatch) => {
   dispatch({
     type: SET_AUTH_LOADING,
   })
+
   const body = JSON.stringify({
     name,
     email,
     password,
   })
-  console.log('通過')
+
   try {
     const res = await fetch('/api/account/register', {
       method: 'POST',
@@ -52,6 +60,7 @@ export const register = (name: string, email: string, password: string) => async
       dispatch({
         type: REGISTER_SUCCESS,
       })
+      await dispatch(login(email, password))
     } else {
       dispatch({
         type: REGISTER_FAIL,
@@ -69,7 +78,7 @@ export const register = (name: string, email: string, password: string) => async
 }
 
 // ログイン
-export const login = (email: string, password: string) => async (dispatch: any) => {
+export const login = (email: string, password: string) => async (dispatch) => {
   dispatch({
     type: SET_AUTH_LOADING,
   })
@@ -87,8 +96,6 @@ export const login = (email: string, password: string) => async (dispatch: any) 
       },
       body: body,
     })
-
-    console.log(res.status)
 
     if (res.status === 200) {
       dispatch({
@@ -112,7 +119,7 @@ export const login = (email: string, password: string) => async (dispatch: any) 
 }
 
 // ユーザー情報取得
-export const user = () => async (dispatch: any) => {
+export const user = () => async (dispatch) => {
   dispatch({
     type: SET_AUTH_LOADING,
   })
@@ -146,12 +153,13 @@ export const user = () => async (dispatch: any) => {
 }
 
 // リフレッシュトークン
-export const refresh = () => async (dispatch: any) => {
+export const refresh = () => async (dispatch) => {
   dispatch({
     type: SET_AUTH_LOADING,
   })
+
   try {
-    const res = await fetch(`/api/account/refresh`, {
+    const res = await fetch('/api/account/refresh', {
       method: 'GET',
     })
 
@@ -177,7 +185,7 @@ export const refresh = () => async (dispatch: any) => {
 }
 
 // 認証チェック
-export const verify = () => async (dispatch: any) => {
+export const verify = () => async (dispatch) => {
   dispatch({
     type: SET_AUTH_LOADING,
   })
@@ -209,19 +217,15 @@ export const verify = () => async (dispatch: any) => {
 }
 
 // ログアウト
-export const logout = () => async (dispatch: any) => {
-
+export const logout = () => async (dispatch) => {
   dispatch({
     type: SET_AUTH_LOADING,
   })
 
   try {
-    // Next.jsのapiエンドポイントを叩く
     const res = await fetch('/api/account/logout', {
-      method: 'post',
+      method: 'POST',
     })
-
-    console.log(res.status)
 
     if (res.status === 200) {
       dispatch({
@@ -233,7 +237,6 @@ export const logout = () => async (dispatch: any) => {
       })
     }
   } catch (err) {
-    console.log(err)
     dispatch({
       type: LOGOUT_FAIL,
     })
@@ -244,3 +247,56 @@ export const logout = () => async (dispatch: any) => {
   })
 }
 
+// プロフィール編集
+export const edit_profile = (id: number, name: string, image: string) => async (dispatch) => {
+  dispatch({
+    type: SET_AUTH_LOADING,
+  })
+
+  const formData = new FormData()
+  formData.append('name', name)
+  if (image) {
+    formData.append('image', image)
+  }
+
+  try {
+    const res = await fetch('/api/post/edit_post', {
+      method: 'GET',
+    })
+    const data = await res.json()
+
+    const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/users/${id}/`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${data.access}`,
+      },
+      body: formData,
+    })
+
+    if (res2.status === 200) {
+      dispatch({
+        type: EDIT_PROFILE_SUCCESS,
+      })
+      await dispatch(user())
+    } else {
+      dispatch({
+        type: EDIT_PROFILE_FAIL,
+      })
+    }
+  } catch (err) {
+    dispatch({
+      type: EDIT_PROFILE_FAIL,
+    })
+  }
+
+  dispatch({
+    type: REMOVE_AUTH_LOADING,
+  })
+}
+
+// 状態解除
+export const reset_auth_status = () => (dispatch) => {
+  dispatch({
+    type: RESET_AUTH_STATUS,
+  })
+}

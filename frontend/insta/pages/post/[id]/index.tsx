@@ -53,7 +53,7 @@ const DetailPost = ({ staticPost, id }) => {
   return (
     <>
       <Head>
-        <title>FullStackChannel | 詳細</title>
+        <title>詳細</title>
       </Head>
 
       {post && (
@@ -78,7 +78,6 @@ const DetailPost = ({ staticPost, id }) => {
                     alt={post.title}
                     width={40}
                     height={40}
-                    objectFit="cover"
                   />
                   <div>
                     <div>{post.user.name}</div>
@@ -89,7 +88,7 @@ const DetailPost = ({ staticPost, id }) => {
                   <div className="text-sm flex space-x-4">
                     <div>
                       <Link href={`/post/${post.id}/edit`}>
-                        <a>編集</a>
+                        編集
                       </Link>
                     </div>
                     <div className="cursor-pointer" onClick={deletePost}>

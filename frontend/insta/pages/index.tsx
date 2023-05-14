@@ -2,6 +2,8 @@ import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
 import { getPostList } from '../lib/posts'
+import { reset_auth_status } from '../actions/auth'
+import { reset_post_status } from '../actions/post' // 追加
 import useSWR from 'swr'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -25,6 +27,14 @@ const Index = ({ staticPosts }) => {
   useEffect(() => {
     mutate()
   }, [])
+
+  // 状態解除
+  useEffect(() => {
+    if (dispatch && dispatch !== null && dispatch !== undefined) {
+      dispatch(reset_auth_status())
+      dispatch(reset_post_status())
+    }
+  }, [dispatch])
 
   if (router.isFallback || !posts) {
     return <div className="text-center">Loading...</div>

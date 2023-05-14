@@ -7,6 +7,10 @@ import {
   EDIT_POST_SUCCESS,
   EDIT_POST_FAIL,
 
+  // 投稿削除
+  DELETE_POST_SUCCESS,
+  DELETE_POST_FAIL,
+
   // 読み込み中
   SET_POST_LOADING,
   REMOVE_POST_LOADING,
@@ -19,6 +23,7 @@ const initialState = {
   loading: false,
   new_post_success: false,
   edit_post_success: false,
+  delete_post_success: false,
 }
 
 const postReducer = (state = initialState, action) => {
@@ -47,6 +52,13 @@ const postReducer = (state = initialState, action) => {
         ...state,
       }
 
+    // 投稿削除
+    case DELETE_POST_SUCCESS:
+      return {
+        ...state,
+        delete_post_success: true,
+      }
+
     // 読み込み中
     case SET_POST_LOADING:
       return {
@@ -64,6 +76,8 @@ const postReducer = (state = initialState, action) => {
       return {
         ...state,
         new_post_success: false,
+        edit_post_success: false,
+        delete_post_success: false,
       }
     default:
       return state
