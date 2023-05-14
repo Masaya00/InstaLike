@@ -1,46 +1,61 @@
 import Link from 'next/link'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../actions/auth'
-import { useRouter } from "next/router";
+import {
+  HomeIcon,
+  LogoutIcon,
+  LoginIcon,
+  PlusCircleIcon,
+  UserAddIcon,
+  UserIcon,
+} from '@heroicons/react/outline'
 
 
 const Navigation = () => {
-  const router = useRouter()
   const dispatch = useDispatch()
   const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated)
 
   const logoutHandler = async () => {
     if (dispatch && dispatch !== null && dispatch !== undefined) {
-      console.log('navigationログアウト通過')
       await dispatch(logout())
     }
   }
   return (
-    <div>
-      <div className='bg-gray-900'>
-        <div className='max-w-7x1 px-8 py-4 mx-auto'>
-          <div className='flex items-center justify-between'>
-            <div>
-            <Link href='/' className='text-white hover:text-gray-50'>
-              フルスタックチャンネル
+    <div className="sticky top-0 bg-white z-10">
+      <div className="border-b py-3">
+        <div className="max-w-5xl mx-auto flex justify-between px-4">
+          <div className="text-lg font-extrabold">
+            <Link href="/">
+              InstaLike
             </Link>
-            </div>
-            <div className="">
-              {isAuthenticated ? (
-                <div onClick={logoutHandler} className="cursor-pointer button-nav">
-                  ログアウト
+          </div>
+          <div className="flex space-x-4">
+            <Link href="/" className="h-7 w-7">
+                <HomeIcon />
+            </Link>
+
+            {isAuthenticated ? (
+              <div className="flex space-x-4">
+                <Link href="/post/new" className="h-7 w-7">
+                    <PlusCircleIcon  />
+                </Link>
+                <Link href="/profile" className="h-7 w-7">
+                    <UserIcon />
+                </Link>
+                <div onClick={logoutHandler} className="cursor-pointer h-7 w-7">
+                  <LogoutIcon />
                 </div>
-              ) : (
-                <div>
-                  <Link href="/login" className="button-nav mr-4">
-                    ログイン
-                  </Link>
-                  <Link href="/register" className="button-nav">
-                    アカウント登録
-                  </Link>
-                </div>
-              )}
-            </div>
+              </div>
+            ) : (
+              <div className="flex space-x-4">
+                <Link href="/login"  className="h-7 w-7">
+                    <LoginIcon />
+                </Link>
+                <Link href="/register" className="h-7 w-7">
+                    <UserAddIcon />
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>

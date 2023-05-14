@@ -211,13 +211,12 @@ export const verify = () => async (dispatch: any) => {
 // ログアウト
 export const logout = () => async (dispatch: any) => {
 
-  console.log('ログアウトauth通過')
-
   dispatch({
     type: SET_AUTH_LOADING,
   })
 
   try {
+    // Next.jsのapiエンドポイントを叩く
     const res = await fetch('/api/account/logout', {
       method: 'post',
     })

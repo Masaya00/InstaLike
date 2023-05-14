@@ -40,10 +40,9 @@ class RegisterView(APIView):
 
 class UserView(APIView):
     def get(self, request):
-        print(request.__dict__)
         try:
             user = request.user
-            user = UserSerializer(user)
+            user = UserSerializer(user, context={'request': request})
 
             return Response(
                 {'user': user.data},
@@ -54,3 +53,8 @@ class UserView(APIView):
                 {'error': 'ユーザーの取得に問題が発生しました'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+
+class UserViewSet(ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer

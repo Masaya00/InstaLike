@@ -138,7 +138,8 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ]
+    ],
+    'DATETIME_FORMAT': '%Y/%m/%d %H:%M',
 }
 
 SIMPLE_JWT = {
@@ -157,3 +158,7 @@ AUTH_USER_MODEL = 'accounts.UserAccount'
 # ]
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+
+MEDIA_URL = '/media/' # 追加
+MEDIA_ROOT = str(BASE_DIR / 'media') 

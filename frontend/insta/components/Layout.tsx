@@ -5,7 +5,7 @@ import Head from 'next/head'
 import Navigation from './Navigation'
 
 const Layout = (props: any) => {
-  const dispatch = useDispatch()
+  const dispatch: any = useDispatch()
   // ページがリロードされたときにリフレッシュトークンを更新する。
   useEffect(() => {
     const fn = async () => {
